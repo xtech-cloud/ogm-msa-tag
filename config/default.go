@@ -11,7 +11,7 @@ logger:
   dir: /var/log/msa/
 database:
   mongodb:
-    address: 127.0.0.1:27017
+    address: localhost:27017
     timeout: 10
     user: root
     password: mongodb@OMO
