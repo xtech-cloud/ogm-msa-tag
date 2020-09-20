@@ -18,9 +18,4 @@ database:
     db: msa_tag
 publisher:
 - /signup
-- /signin
-- /signout
-- /reset/password
-- /profile/query
-- /profile/update
 `

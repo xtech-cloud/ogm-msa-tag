@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"omo-msa-account/config"
+	"omo-msa-tag/config"
 	"time"
 
 	"github.com/micro/go-micro/v2"
@@ -11,7 +11,7 @@ import (
 	"github.com/micro/go-micro/v2/metadata"
 	_ "github.com/micro/go-plugins/registry/consul/v2"
 	_ "github.com/micro/go-plugins/registry/etcdv3/v2"
-	proto "github.com/xtech-cloud/omo-msp-account/proto/account"
+	proto "github.com/xtech-cloud/omo-msp-tag/proto/tag"
 	pn "github.com/xtech-cloud/omo-msp-notification/proto/notification"
 )
 
@@ -31,11 +31,11 @@ func (this *Notification) Handle(_ctx context.Context, _message *pn.SimpleMessag
 func main() {
 	config.Setup()
 	service := micro.NewService(
-		micro.Name("omo.msa.account.tester"),
+		micro.Name("omo.msa.tag.tester"),
 	)
 	service.Init()
 
-	micro.RegisterSubscriber("omo.msa.account.notification", service.Server(), new(Notification))
+	micro.RegisterSubscriber("omo.msa.tag.notification", service.Server(), new(Notification))
 
 	cli := service.Client()
 	cli.Init(
@@ -50,129 +50,17 @@ func main() {
 		}),
 	)
 
-	auth := proto.NewAuthService("omo.msa.account", cli)
-	profile := proto.NewProfileService("omo.msa.account", cli)
+	collection := proto.NewCollectionService("omo.msa.account", cli)
 
-	go test(auth, profile)
+	go test(collection)
 	service.Run()
 }
 
-func test(_auth proto.AuthService, _profile proto.ProfileService) {
+func test(_collection proto.CollectionService) {
 	for range time.Tick(4 * time.Second) {
 		fmt.Println("----------------------------------------------------------")
-		accessToken := ""
 
-		{
-			fmt.Println("> Signup")
-			// Make request
-			rsp, err := _auth.Signup(context.Background(), &proto.SignupRequest{
-				Username: "user001",
-				Password: "11112222",
-			})
-			if err != nil {
-				fmt.Println(err)
-			} else {
-				fmt.Println(rsp)
-			}
-		}
-
-		//错误账号
-		{
-			fmt.Println("> Signin")
-			// Make request
-			rsp, err := _auth.Signin(context.Background(), &proto.SigninRequest{
-				Strategy: proto.Strategy_STRATEGY_JWT,
-				Username: "user",
-				Password: "11112222",
-			})
-			if err != nil {
-				fmt.Println(err)
-			} else {
-				fmt.Println(rsp)
-			}
-		}
-
-		//错误密码
-		{
-			fmt.Println("> Signin")
-			// Make request
-			rsp, err := _auth.Signin(context.Background(), &proto.SigninRequest{
-				Strategy: proto.Strategy_STRATEGY_JWT,
-				Username: "user001",
-				Password: "11223344",
-			})
-			if err != nil {
-				fmt.Println(err)
-			} else {
-				fmt.Println(rsp)
-			}
-		}
-
-		//正确账号
-		{
-			fmt.Println("> Signin")
-			// Make request
-			rsp, err := _auth.Signin(context.Background(), &proto.SigninRequest{
-				Strategy: proto.Strategy_STRATEGY_JWT,
-				Username: "user001",
-				Password: "11112222",
-			})
-			if err != nil {
-				fmt.Println(err)
-			} else {
-				fmt.Println(rsp)
-				accessToken = rsp.AccessToken
-			}
-		}
-
-		//重置密码
-		{
-			fmt.Println("> ResetPasswd")
-			// Make request
-			rsp, err := _auth.ResetPasswd(context.Background(), &proto.ResetPasswdRequest{
-				Strategy:    proto.Strategy_STRATEGY_JWT,
-				AccessToken: accessToken,
-				Password:    "abcdefg",
-			})
-			if err != nil {
-				fmt.Println(err)
-			} else {
-				fmt.Println(rsp)
-			}
-		}
-
-		//重置密码
-		{
-			fmt.Println("> ResetPasswd")
-			// Make request
-			rsp, err := _auth.ResetPasswd(context.Background(), &proto.ResetPasswdRequest{
-				Strategy:    proto.Strategy_STRATEGY_JWT,
-				AccessToken: accessToken,
-				Password:    "11112222",
-			})
-			if err != nil {
-				fmt.Println(err)
-			} else {
-				fmt.Println(rsp)
-			}
-		}
-
-		//更新Profile
-		{
-			fmt.Println("> Update")
-			// Make request
-			rsp, err := _profile.Update(context.Background(), &proto.UpdateProfileRequest{
-				Strategy:    proto.Strategy_STRATEGY_JWT,
-				AccessToken: accessToken,
-				Profile:     "myprofile:" + time.Now().String(),
-			})
-			if err != nil {
-				fmt.Println(err)
-			} else {
-				fmt.Println(rsp)
-			}
-		}
-
+        /*
 		//查询Profile
 		{
 			fmt.Println("> Query")
@@ -187,5 +75,6 @@ func test(_auth proto.AuthService, _profile proto.ProfileService) {
 				fmt.Println(rsp)
 			}
 		}
+        */
 	}
 }
