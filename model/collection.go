@@ -6,14 +6,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type Tag struct {
-	Code    string            `bson:"code"`
-	Name    string            `bson:"name"`
-	Flag    int64             `bson:"flag"`
-	Alias   map[string]string `bson:"alias"`
-	Keyword []string          `bson:"keyword"`
-}
-
 const (
 	CollectionName = "msa_tag_collection"
 )
@@ -107,23 +99,23 @@ func (this *CollectionDAO) FindMany(_filter string, _offset int64, _count int64)
 	defer cancel()
 
 	// 模糊查询并忽略大小写
-    /*
-	regex := bson.M{
-		"$regex":   _filter,
-		"$options": "$i",
-	}
+	/*
+	   regex := bson.M{
+	       "$regex":   _filter,
+	       "$options": "$i",
+	   }
 
-	filter := bson.D{
-		{"$or", bson.A{
-			bson.M{"code": regex},
-			bson.M{"name": regex},
-			//bson.M{"alias": regex},
-			bson.M{"keyword": regex},
-		}},
-	}
-    */
+	   filter := bson.D{
+	       {"$or", bson.A{
+	           bson.M{"code": regex},
+	           bson.M{"name": regex},
+	           //bson.M{"alias": regex},
+	           bson.M{"keyword": regex},
+	       }},
+	   }
+	*/
 
-    //TODO 从别名中搜索 
+	//TODO 从别名中搜索
 	filter := bson.D{
 		{"$or", bson.A{
 			bson.M{"code": _filter},
@@ -178,6 +170,42 @@ func (this *CollectionDAO) UpdateOne(_tag *Tag) error {
 	}
 
 	increaseFilter([]*Tag{_tag})
+	return nil
+}
+
+func (this *CollectionDAO) AppendDummy(_tag *Tag, _dummy string) error {
+	ctx, cancel := NewContext()
+	defer cancel()
+
+	filter := bson.M{"code": _tag.Code}
+	update := bson.M{
+		"$addToSet": bson.M{
+			"dummy": bson.M{
+				"$each": []string{_dummy},
+			},
+		},
+	}
+	_, err := this.conn.DB.Collection(CollectionName).UpdateOne(ctx, filter, update)
+	if nil != err {
+		return err
+	}
+	return nil
+}
+
+func (this *CollectionDAO) RemoveDummy(_tag *Tag, _dummy string) error {
+	ctx, cancel := NewContext()
+	defer cancel()
+
+	filter := bson.D{{"code", _tag.Code}}
+	update := bson.D{
+		{"$pull", bson.D{
+			{"dummy", _dummy},
+		}},
+	}
+	_, err := this.conn.DB.Collection(CollectionName).UpdateOne(ctx, filter, update)
+	if nil != err {
+		return err
+	}
 	return nil
 }
 

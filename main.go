@@ -38,6 +38,7 @@ func main() {
 	publisher.DefaultPublisher = micro.NewPublisher(config.Schema.Service.Name +  ".notification", service.Client())
 	// Register Handler
 	proto.RegisterCollectionHandler(service.Server(), new(handler.Collection))
+	proto.RegisterDummyHandler(service.Server(), new(handler.Dummy))
 
 	app, _ := filepath.Abs(os.Args[0])
 

@@ -30,12 +30,13 @@ TOKEN := $(shell cat /tmp/msa-token)
 call:
 	# 添加不存在的标签
 	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.AddTag '{"code":"T_01", "name":"处理器", "flag": 1024, "alias":"CPU"}'
+	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.AddTag '{"code":"T_02", "name":"硬盘", "flag": 1024, "alias":"HD"}'
 	# 添加已存在的标签
 	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.AddTag '{"code":"T_01", "name":"处理器", "flag": 1024, "alias":"CPU"}'
 	# 列举
 	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.ListTag ''
 	# 更新不存在的标签
-	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.UpdateTag '{"code":"T_02", "name":"移动处理器", "flag": 2048, "alias":{"en_US":"Mobile CPU", "zh_CN":"移动处理器"}}'
+	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.UpdateTag '{"code":"T_09", "name":"移动处理器", "flag": 2048, "alias":{"en_US":"Mobile CPU", "zh_CN":"移动处理器"}}'
 	# 更新存在的标签的部分字段
 	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.UpdateTag '{"code":"T_01", "name":"移动处理器", "flag": 2048 }'
 	# 更新存在的标签的全部字段
@@ -58,10 +59,25 @@ call:
 	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.SearchTag '{"filter":"Snapdragon 835"}'
 	# 搜索关键字
 	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.SearchTag '{"filter":"mobile"}'
+	# 添加受体, 标签不存在
+	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.AddTag '{"code":"T_09", "owner":"001"}'
+	# 添加受体
+	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.AddTag '{"code":"T_01", "owner":"001"}'
+	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.AddTag '{"code":"T_01", "owner":"002"}'
+	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.AddTag '{"code":"T_02", "owner":"001"}'
+	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.AddTag '{"code":"T_02", "owner":"003"}'
+	# 检索受体
+	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.FilterTag '{"code":["T_09"]}'
+	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.FilterTag '{"code":["T_01"]}'
+	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.FilterTag '{"code":["T_02"]}'
+	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.FilterTag '{"code":["T_01", "T_02"]}'
+	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.FilterTag '{"code":["T_01", "T_09"]}'
+
 	# 删除不存在的标签
-	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.RemoveTag '{"code":"T_02"}'
+	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.RemoveTag '{"code":"T_09"}'
 	# 删除存在的标签
 	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.RemoveTag '{"code":"T_01"}'
+	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.RemoveTag '{"code":"T_02"}'
 
 .PHONY: tcall
 tcall:

@@ -10,7 +10,7 @@ import (
 
 type Collection struct{}
 
-func (this *Collection) AddTag(_ctx context.Context, _req *proto.AddTagRequest, _rsp *proto.BlankResponse) error {
+func (this *Collection) AddTag(_ctx context.Context, _req *proto.CollectionAddTagRequest, _rsp *proto.BlankResponse) error {
 	logger.Infof("Received Collection.AddTag, req is %v", _req)
 	_rsp.Status = &proto.Status{}
 
@@ -50,12 +50,13 @@ func (this *Collection) AddTag(_ctx context.Context, _req *proto.AddTagRequest, 
 		Flag:    _req.Flag,
 		Alias:   alias,
 		Keyword: make([]string, 0),
+        Dummy: make([]string, 0),
 	}
 	err = dao.InsertOne(tag)
 	return err
 }
 
-func (this *Collection) RemoveTag(_ctx context.Context, _req *proto.RemoveTagRequest, _rsp *proto.BlankResponse) error {
+func (this *Collection) RemoveTag(_ctx context.Context, _req *proto.CollectionRemoveTagRequest, _rsp *proto.BlankResponse) error {
 	logger.Infof("Received Collection.RemoveTag, req is %v", _req)
 	_rsp.Status = &proto.Status{}
 
@@ -79,7 +80,7 @@ func (this *Collection) RemoveTag(_ctx context.Context, _req *proto.RemoveTagReq
     return dao.DeleteMany(_req.Code)
 }
 
-func (this *Collection) UpdateTag(_ctx context.Context, _req *proto.UpdateTagRequest, _rsp *proto.BlankResponse) error {
+func (this *Collection) UpdateTag(_ctx context.Context, _req *proto.CollectionUpdateTagRequest, _rsp *proto.BlankResponse) error {
 	logger.Infof("Received Collection.UpdateTag, req is %v", _req)
 	_rsp.Status = &proto.Status{}
 
@@ -117,7 +118,7 @@ func (this *Collection) UpdateTag(_ctx context.Context, _req *proto.UpdateTagReq
 	return nil
 }
 
-func (this *Collection) ListTag(_ctx context.Context, _req *proto.ListTagRequest, _rsp *proto.ListTagResponse) error {
+func (this *Collection) ListTag(_ctx context.Context, _req *proto.CollectionListTagRequest, _rsp *proto.CollectionListTagResponse) error {
 	logger.Infof("Received Collection.ListTag, req is %v", _req)
 	_rsp.Status = &proto.Status{}
 
@@ -157,7 +158,7 @@ func (this *Collection) ListTag(_ctx context.Context, _req *proto.ListTagRequest
 	return nil
 }
 
-func (this *Collection) SearchTag(_ctx context.Context, _req *proto.SearchTagRequest, _rsp *proto.SearchTagResponse) error {
+func (this *Collection) SearchTag(_ctx context.Context, _req *proto.CollectionSearchTagRequest, _rsp *proto.CollectionSearchTagResponse) error {
 	logger.Infof("Received Collection.SearchTag, req is %v", _req)
 	_rsp.Status = &proto.Status{}
 
@@ -195,7 +196,7 @@ func (this *Collection) SearchTag(_ctx context.Context, _req *proto.SearchTagReq
     return nil
 }
 
-func (this *Collection) SuggestFilter(_ctx context.Context, _req *proto.SuggestFilterRequest, _rsp *proto.SuggestFilterResponse) error {
+func (this *Collection) SuggestFilter(_ctx context.Context, _req *proto.CollectionSuggestFilterRequest, _rsp *proto.CollectionSuggestFilterResponse) error {
 	logger.Infof("Received Collection.SuggestFilter, req is %v", _req)
 	_rsp.Status = &proto.Status{}
 
@@ -205,7 +206,7 @@ func (this *Collection) SuggestFilter(_ctx context.Context, _req *proto.SuggestF
 	return nil
 }
 
-func (this *Collection) ReplaceKeyword(_ctx context.Context, _req *proto.ReplaceKeywordRequest, _rsp *proto.BlankResponse) error {
+func (this *Collection) ReplaceKeyword(_ctx context.Context, _req *proto.CollectionReplaceKeywordRequest, _rsp *proto.BlankResponse) error {
 	logger.Infof("Received Collection.AddTag, req is %v", _req)
 	_rsp.Status = &proto.Status{}
 
@@ -224,7 +225,7 @@ func (this *Collection) ReplaceKeyword(_ctx context.Context, _req *proto.Replace
 	return nil
 }
 
-func (this *Collection) ExtendKeyword(_ctx context.Context, _req *proto.ExtendKeywordRequest, _rsp *proto.BlankResponse) error {
+func (this *Collection) ExtendKeyword(_ctx context.Context, _req *proto.CollectionExtendKeywordRequest, _rsp *proto.BlankResponse) error {
 	logger.Infof("Received Collection.AddTag, req is %v", _req)
 	_rsp.Status = &proto.Status{}
 
@@ -242,7 +243,7 @@ func (this *Collection) ExtendKeyword(_ctx context.Context, _req *proto.ExtendKe
 	return nil
 }
 
-func (this *Collection) MergeJson(_ctx context.Context, _req *proto.MergeJsonRequest, _rsp *proto.BlankResponse) error {
+func (this *Collection) MergeJson(_ctx context.Context, _req *proto.CollectionMergeJsonRequest, _rsp *proto.BlankResponse) error {
 	logger.Infof("Received Collection.AddTag, req is %v", _req)
 	_rsp.Status = &proto.Status{}
 	return nil
