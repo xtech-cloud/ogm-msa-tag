@@ -71,7 +71,7 @@ func (this *Dummy) RemoveTag(_ctx context.Context, _req *proto.DummyRemoveTagReq
 }
 
 func (this *Dummy) FilterTag(_ctx context.Context, _req *proto.DummyFilterTagRequest, _rsp *proto.DummyFilterTagResponse) error {
-	logger.Infof("Received Collection.ListTag, req is %v", _req)
+	logger.Infof("Received Dummy.ListTag, req is %v", _req)
 	_rsp.Status = &proto.Status{}
 
 	offset := int64(0)
@@ -86,6 +86,35 @@ func (this *Dummy) FilterTag(_ctx context.Context, _req *proto.DummyFilterTagReq
 
 	dao := model.NewDummyDAO(nil)
     total, dummy, err := dao.Filter(offset, count, _req.Code)
+	if nil != err {
+		return err
+	}
+    _rsp.Total = total
+    _rsp.Owner = dummy
+	return nil
+}
+
+func (this *Dummy) ListTag(_ctx context.Context, _req *proto.DummyListTagRequest, _rsp *proto.DummyListTagResponse) error {
+	logger.Infof("Received Dummy.ListTag, req is %v", _req)
+	_rsp.Status = &proto.Status{}
+
+	offset := int64(0)
+	count := int64(100)
+
+	if "" == _req.Owner{
+		_rsp.Status.Code = 1
+		_rsp.Status.Message = "owner is required"
+		return nil
+	}
+
+	if _req.Offset > 0 {
+		offset = _req.Offset
+	}
+	if _req.Count > 0 {
+		count = _req.Count
+	}
+	dao := model.NewDummyDAO(nil)
+    total, dummy, err := dao.List(offset, count, _req.Owner)
 	if nil != err {
 		return err
 	}

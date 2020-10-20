@@ -459,6 +459,8 @@ github.com/xtech-cloud/omo-msp-tag v1.2.0 h1:cvgOqFHkDPScKQCkApzlT8I5Il/MaVmf9AD
 github.com/xtech-cloud/omo-msp-tag v1.2.0/go.mod h1:ZkDgBXxjlfM4rbd2R55lQavzrucANl41/4XUCnWqi1k=
 github.com/xtech-cloud/omo-msp-tag v1.3.0 h1:zEzYj9hv5DcFWAfNDWx3DWBrCryRCDMgjgWXjIOZlX0=
 github.com/xtech-cloud/omo-msp-tag v1.3.0/go.mod h1:ZkDgBXxjlfM4rbd2R55lQavzrucANl41/4XUCnWqi1k=
+github.com/xtech-cloud/omo-msp-tag v1.4.0 h1:mUs5wqnn+TJLqc+5mdOra7dF9Wwcc0Ksu2SbRZAhmvw=
+github.com/xtech-cloud/omo-msp-tag v1.4.0/go.mod h1:ZkDgBXxjlfM4rbd2R55lQavzrucANl41/4XUCnWqi1k=
 go.etcd.io/bbolt v1.3.3/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=
 go.mongodb.org/mongo-driver v1.4.1 h1:38NSAyDPagwnFpUA/D5SFgbugUYR3NzYRNa4Qk9UxKs=
 go.mongodb.org/mongo-driver v1.4.1/go.mod h1:llVBH2pkj9HywK0Dtdt6lDikOjFLbceHVu/Rc0iMKLs=
