@@ -1,6 +1,7 @@
 package model
 
 import (
+    "fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -21,7 +22,7 @@ func NewDummyDAO(_conn *Conn) *DummyDAO {
 	}
 }
 
-func (this *DummyDAO) Filter(_offset int64, _count int64, _code []string) (total_ int64, dummy_ []string, err_ error) {
+func (this *DummyDAO) Filter(_offset int64, _count int64, _tag []string) (total_ int64, dummy_ []string, err_ error) {
     total_ = 0
     dummy_ = make([]string, 0)
     err_ = nil
@@ -30,23 +31,17 @@ func (this *DummyDAO) Filter(_offset int64, _count int64, _code []string) (total
 	ctx, cancel := NewContext()
 	defer cancel()
 
-    pipeline := []bson.M{
-        bson.M{"$match": bson.M{"code": bson.M{"$in":_code}}},
+    filter := []bson.M{
+        bson.M{"$match": bson.M{"name": bson.M{"$in":_tag}}},
     }
-    opts := options.Aggregate()
-	cur, err := this.conn.DB.Collection(CollectionName).Aggregate(ctx, pipeline, opts)
-    defer cur.Close(ctx)
-
+    opts := options.Distinct()
+	result, err := this.conn.DB.Collection(CollectionName).Distinct(ctx, "dummy", filter, opts)
     if nil != err {
         err_ = err
         return
     }
+    fmt.Println(result)
 
-    for cur.Next(ctx) {
-		var tag Tag
-		err = cur.Decode(&tag)
-        dummy_ = append(dummy_, tag.Dummy[:])
-    }
     return
 }
 

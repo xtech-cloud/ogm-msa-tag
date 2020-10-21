@@ -123,6 +123,7 @@ func (this *Dummy) ListTag(_ctx context.Context, _req *proto.DummyListTagRequest
     for i := 0; i < len(tag); i++ {
         _rsp.Tag[i] = &proto.TagEntity {
             Code: tag[i].Code,
+            Name: tag[i].Name,
             Alias: tag[i].Alias,
         }
     }
