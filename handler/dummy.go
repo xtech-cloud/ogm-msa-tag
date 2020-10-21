@@ -114,11 +114,17 @@ func (this *Dummy) ListTag(_ctx context.Context, _req *proto.DummyListTagRequest
 		count = _req.Count
 	}
 	dao := model.NewDummyDAO(nil)
-    total, dummy, err := dao.List(offset, count, _req.Owner)
+    total, tag, err := dao.List(offset, count, _req.Owner)
 	if nil != err {
 		return err
 	}
     _rsp.Total = total
-    _rsp.Owner = dummy
+    _rsp.Tag = make([]*proto.TagEntity, len(tag))
+    for i := 0; i < len(tag); i++ {
+        _rsp.Tag[i] = &proto.TagEntity {
+            Code: tag[i].Code,
+            Alias: tag[i].Alias,
+        }
+    }
 	return nil
 }

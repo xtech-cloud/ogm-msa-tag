@@ -72,6 +72,8 @@ call:
 	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.FilterTag '{"code":["T_02"]}'
 	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.FilterTag '{"code":["T_01", "T_02"]}'
 	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.FilterTag '{"code":["T_01", "T_09"]}'
+	# 列举受体的标签
+	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.ListTag '{"owner":"001"}'
 
 	# 删除不存在的标签
 	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.RemoveTag '{"code":"T_09"}'
@@ -85,6 +87,20 @@ tcall:
 	go build -o ./bin/ ./tester
 	./bin/tester
 
+.PHONY: fill
+fill:
+	# 添加标签
+	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.AddTag '{"code":"A_01", "name":"Snapdragon 835", "flag": 1024, "alias":"骁龙835"}'
+	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.AddTag '{"code":"A_02", "name":"Intel i5", "flag": 1024, "alias":"英特尔i5"}'
+	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.AddTag '{"code":"B_01", "name":"SSD 128G", "flag": 1024, "alias":"128G固态"}'
+	# 更新标签
+	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.UpdateTag '{"code":"A_01", "keyword":["cpu","处理器","移动端","mobile"]}'
+	MICRO_REGISTRY=consul micro call omo.msa.tag Collection.UpdateTag '{"code":"A_02", "keyword":["cpu","处理器","桌面端","PC"]}'
+	# 添加受体
+	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.AddTag '{"code":"A_01", "owner":"HUAWEI-P30"}'
+	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.AddTag '{"code":"A_02", "owner":"Dell-XPS13"}'
+	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.AddTag '{"code":"B_01", "owner":"HUAWEI-P30"}'
+	MICRO_REGISTRY=consul micro call omo.msa.tag Dummy.AddTag '{"code":"B_01", "owner":"Dell-XPS13"}'
 .PHONY: dist
 dist:
 	mkdir dist
