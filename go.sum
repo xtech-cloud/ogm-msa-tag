@@ -466,7 +466,10 @@ github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415/go.mod h1:
 github.com/xeipuuv/gojsonschema v0.0.0-20180618132009-1d523034197f/go.mod h1:5yf86TLmAcydyeJq5YvxkGPE2fm/u4myDekKRoLuqhs=
 github.com/xeipuuv/gojsonschema v1.1.0/go.mod h1:5yf86TLmAcydyeJq5YvxkGPE2fm/u4myDekKRoLuqhs=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
-github.com/xtech-cloud/omo-msp-account v1.13.0/go.mod h1:Q+PfVmEDIyOKZDGg13zJwTCiQBWDru+cZXKMuUpRvSs=
+github.com/xtech-cloud/ogm-msp-notification v1.0.0 h1:TvrPB33dwQTrDjjfmlER0Khh1kv1+Rp4zuyiEY6z06Q=
+github.com/xtech-cloud/ogm-msp-notification v1.0.0/go.mod h1:rLwfe6jAyYgmMUanVhxbBHKniulvITG2w77jN5j64dg=
+github.com/xtech-cloud/ogm-msp-tag v1.5.0 h1:/aOvcELiBtza3BVCaXv4ONvQCZ0cEMtbQd5NICjXtDE=
+github.com/xtech-cloud/ogm-msp-tag v1.5.0/go.mod h1:NZWwFHhIl9NdzLgEnumgXRz5kERPFmA7cRfSU+MgTXc=
 github.com/xtech-cloud/omo-msp-notification v1.0.0 h1:Vh4C4WIGw4iRP7MXMGL0NPi+S7Sb1g4R0s/v/QqWtO8=
 github.com/xtech-cloud/omo-msp-notification v1.0.0/go.mod h1:RPpOwx9ZuxtYXhJQEE0bae6ccOcHoRySZGL+Vr4mnhM=
 github.com/xtech-cloud/omo-msp-tag v1.5.0 h1:bSRGhfKAquVuI95xr+c/22iKKL136Q/j/EVTM4w98BU=

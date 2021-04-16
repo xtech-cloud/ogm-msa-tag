@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	CollectionName = "msa_tag_collection"
+	CollectionName = "ogm_tag_collection"
 )
 
 type CollectionDAO struct {

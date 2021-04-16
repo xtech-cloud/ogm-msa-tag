@@ -6,7 +6,7 @@ import (
 	"crypto/md5"
 	"encoding/base64"
 	"encoding/hex"
-	"omo-msa-tag/config"
+	"ogm-msa-tag/config"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"

@@ -4,17 +4,17 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"io"
-	"omo-msa-tag/config"
-	"omo-msa-tag/handler"
-	"omo-msa-tag/model"
-	"omo-msa-tag/publisher"
+	"ogm-msa-tag/config"
+	"ogm-msa-tag/handler"
+	"ogm-msa-tag/model"
+	"ogm-msa-tag/publisher"
 	"os"
 	"path/filepath"
 	"time"
 
 	"github.com/micro/go-micro/v2"
 	"github.com/micro/go-micro/v2/logger"
-	proto "github.com/xtech-cloud/omo-msp-tag/proto/tag"
+	proto "github.com/xtech-cloud/ogm-msp-tag/proto/tag"
 )
 
 func main() {
